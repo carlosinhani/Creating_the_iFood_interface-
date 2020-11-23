@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect} from 'react';
-import {Text, Alert, ActivityIndicator} from 'react-native';
-import { SafeAreaView, Image, View, ButtonContainer } from "./styles";
+import {Text, View, SafeAreaView, Alert, ActivityIndicator} from 'react-native';
+import {  } from "./styles";
 
 // import banner from '../../assets/img/banner.png';
 // import Button from '../../components/Button';
@@ -18,29 +18,41 @@ export default function Principal() {
        try{
 
            const reponse = await fetch('http://my-json-server.typicode.com/pablohdev/app-ifood-clone/db');
-           const data = await Response.json();
+           const data = await response.json();
 
-           setLoaded(true);
+          setLoaded(true);
 
            setBanner(data.banner_principal);
            setCategorias(data.categorias);
            setRestaurantes(data.restaurantes);
-           
+
        }catch(e){
-         Alert.alert('Erro ao consultar'+e)
+         Alert.alert('Erro ao consultar'+ e)
        }
     }
 
     buscaDados();
   },[])
 
-
+  const ViewHome = (props) => {
+    return (
+      <Text>Principal</Text>
+    )
+  }
 
   return (
     <>
        <StatusBar style="theme-dark" />
        <SafeAreaView>
-         <Text>Principal</Text>
+           {loaded ? (
+              <ViewHome />
+           ): 
+             (
+               <View>
+                  <ActivityIndicator color='#F0001A' size="large" />
+               </View>
+             )
+              }
        </SafeAreaView>   
     </>      
   );
